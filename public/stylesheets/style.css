@@ -1,3 +1,10 @@
+.ui.inverted.segment, .ui.primary.inverted.segment{
+  background: #71b573;
+}
+
+.ui.secondary.inverted.pointing.menu{
+  border: none;
+}
 
 .hidden.menu {
   display: none;
