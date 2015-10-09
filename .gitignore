@@ -1,0 +1,13 @@
+*.sw*
+*~
+build/
+bin/
+node_modules/
+public/bower_components/
+vendor/
+.idea/
+CDN
+dev
+.DS_STORE
+.DS_Store
+._.DS_Store
