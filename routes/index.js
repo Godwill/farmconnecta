@@ -45,7 +45,7 @@ router.post('/orange/smsmo', function(req, res, next) {
     }
 });
 
-router.get('/orange/smsmo', function(req, res, next) {
+router.get('/listings', function(req, res, next) {
 
     var listings;
 
