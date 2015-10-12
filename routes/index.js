@@ -24,7 +24,6 @@ router.post('/orange/smsmo', function(req, res, next) {
     var listing = new Listing({
         sender: data.senderAddress,
         destination: data.destinationAddress,
-        date: data.dateTime,
         messageId: data.messageId,
         message: data.message
     });
