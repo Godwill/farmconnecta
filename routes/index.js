@@ -8,6 +8,9 @@ var express = require('express'),
     type = thinky.type,
     Listing = require('./../models/Listing');
 
+
+moment().tz("Africa/Johannesburg").format();
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'FarmConnecta' });
