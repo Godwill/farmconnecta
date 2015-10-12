@@ -46,12 +46,16 @@ router.post('/orange/smsmo', function(req, res, next) {
 
 router.get('/orange/smsmo', function(req, res, next) {
 
+    var listings;
+
     r.table("Listing").orderBy({index: "date"}).run().then(function(listings){
-        return res.json(listings).status(200);
+        listings = listings;
     }).error(function(err){
         console.log(err);
         return res.json({message: err}).status(401);
     });
+
+    res.render('listings', {'listings': listings});
 });
 
 router.get('/logout', function(req, res, next) {
