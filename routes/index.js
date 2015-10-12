@@ -44,6 +44,16 @@ router.post('/orange/smsmo', function(req, res, next) {
     }
 });
 
+router.get('/orange/smsmo', function(req, res, next) {
+
+    r.table("Listing").orderBy({index: "date"}).run().then(function(listings){
+        return res.json(listings).status(200);
+    }).error(function(err){
+        console.log(err);
+        return res.json({message: err}).status(401);
+    });
+});
+
 router.get('/logout', function(req, res, next) {
 	console.log("I am being probed");
     next();
