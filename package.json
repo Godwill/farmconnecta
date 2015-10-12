@@ -45,6 +45,7 @@
     "run-sequence": "^1.1.4",
     "semantic-ui": "^2.1.4",
     "serve-favicon": "~2.3.0",
+    "thinky": "^2.1.9",
     "yamljs": "^0.2.4"
   }
 }
