@@ -34,7 +34,7 @@
 
 <!-- Page Contents -->
 <div class="pusher">
-  <div class="ui inverted vertical masthead center aligned segment">
+  <div class="ui inverted vertical masthead center aligned segment" style="min-height: 100px;">
 
     <div class="ui container">
       <div class="ui large secondary inverted pointing menu">
@@ -50,32 +50,25 @@
       </div>
     </div>
 
-    <div class="ui text container">
-      <h1 class="ui inverted header">
-        FarmConnecta
-      </h1>
-      <h2>An SMS powered Twitter for farmers.</h2>
-      <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
-    </div>
-
   </div>
 
-    <div class="ui vertical centered stripe segment">
-      <div class="ui text container">
-        <h3 class="ui header">Latest Listings</h3>
+  <div class="ui vertical centered stripe segment">
+    <div class="ui text container">
+      <h3 class="ui header">Latest Listings</h3>
 
-        <ul>
-          <% for(var i=0; i<listings.length; i++) {%>
-          <li>
-            <%= listings[i].sender %>
-            <%= listings[i].date %>
-            <%= listings[i].message %>
-          </li>
-          <% } %>
-        </ul>
-
+      <div>
+        <% for(var i=0; i<listings.length; i++) {%>
+        <div class="ui ignored info message">
+          <h3><%= listings[i].sender %>
+            <span style="float:right;position: relative; display: inline-block; font-size: 12px;"><%= moment(listings[i].date).startOf('day').fromNow();%>
+            </span></h3>
+          <p><%= listings[i].message %></p>
+        </div>
+        <% } %>
       </div>
+
     </div>
+  </div>
 
   <% include ../views/partials/footer %>
 

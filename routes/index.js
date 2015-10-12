@@ -2,6 +2,7 @@ var express = require('express'),
     util = require('util'),
     router = express.Router(),
     _ = require('underscore'),
+    moment = require('moment'),
     thinky = require('./../config/thinky.js'),
     r = thinky.r,
     type = thinky.type,
@@ -49,13 +50,12 @@ router.get('/orange/smsmo', function(req, res, next) {
     var listings;
 
     r.table("Listing").orderBy({index: "date"}).run().then(function(listings){
-        listings = listings;
+        res.render('listings', {'listings': listings, 'moment' : moment});
     }).error(function(err){
         console.log(err);
-        res.json({message: err}).status(401);
+        return res.json({message: err}).status(401);
     });
 
-    res.render('listings', {'listings': listings});
 });
 
 router.get('/logout', function(req, res, next) {

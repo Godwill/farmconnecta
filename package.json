@@ -39,6 +39,7 @@
     "gulp-watch": "^4.3.5",
     "jquery": "^2.1.4",
     "map-stream": "0.0.6",
+    "moment": "^2.10.6",
     "morgan": "~1.6.1",
     "passwordless": "^1.1.0",
     "require-dot-file": "^0.4.0",
