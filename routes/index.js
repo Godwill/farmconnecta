@@ -52,7 +52,7 @@ router.get('/orange/smsmo', function(req, res, next) {
         listings = listings;
     }).error(function(err){
         console.log(err);
-        return res.json({message: err}).status(401);
+        res.json({message: err}).status(401);
     });
 
     res.render('listings', {'listings': listings});
