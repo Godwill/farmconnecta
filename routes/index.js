@@ -49,7 +49,7 @@ router.get('/listings', function(req, res, next) {
 
     var listings;
 
-    r.table("Listing").orderBy({index: "-date"}).run().then(function(listings){
+    r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
         res.render('listings', {'listings': listings, 'moment' : moment});
     }).error(function(err){
         console.log(err);
