@@ -1,6 +1,7 @@
 var express = require('express'),
     util = require('util'),
     router = express.Router(),
+    _ = require('underscore'),
     thinky = require('./../config/thinky.js'),
     r = thinky.r,
     type = thinky.type,
@@ -23,16 +24,16 @@ router.post('/orange/smsmo', function(req, res, next) {
         sender: data.senderAddress,
         destination: data.destinationAddress,
         date: data.dateTime,
+        messageId: data.messageId,
         message: data.message
     });
 
 
     if(_.isEmpty(data) === false){
-
         listing.save().then(function(result){
             console.log(result);
             res.status(200)
-                .send({ success: true, fileCount: count }
+                .send({ success: true}
             );
 
         }).error(function(err){

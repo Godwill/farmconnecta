@@ -10,6 +10,7 @@ var Listing = thinky.createModel("Listing", {
     sender: type.string(),
     destination: type.string(),
     date: type.date().default(r.now()),
+    messageId: type.string(),
     message: type.string()
 });
 
