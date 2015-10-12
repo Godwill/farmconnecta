@@ -14,11 +14,13 @@ router.get('/login', function(req, res, next) {
 router.post('/orange', function(req, res, next) {
 	res.setHeader('Content-Type', 'application/json');
     res.send(util.inspect(res));
+    next();
 });
 
 router.get('/orange', function(req, res, next) {
 	res.setHeader('Content-Type', 'application/json');
     res.send(util.inspect(res));
+    next();
 });
 
 module.exports = router;
