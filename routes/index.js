@@ -25,4 +25,9 @@ router.get('/orange', function(req, res, next) {
     next();
 });
 
+router.get('/logout', function(req, res, next) {
+	console.log("I am being probed");
+    next();
+});
+
 module.exports = router;
