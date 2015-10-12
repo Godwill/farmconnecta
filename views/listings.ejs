@@ -61,7 +61,7 @@
         <div class="ui ignored info message">
           <h3><%= listings[i].sender %>
             <span style="float:right;position: relative; display: inline-block; font-size: 12px;">
-              <%= moment(listings[i].date).startOf('day').fromNow();%>
+              <%= moment.tz(listings[i].date).fromNow();%>
             </span></h3>
           <p><%= listings[i].message %></p>
         </div>
