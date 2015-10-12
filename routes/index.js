@@ -1,4 +1,5 @@
 var express = require('express');
+var util = require('util');
 var router = express.Router();
 
 /* GET home page. */
@@ -12,12 +13,12 @@ router.get('/login', function(req, res, next) {
 
 router.post('/orange', function(req, res, next) {
 	res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ res: res, req: req }, null, 3));
+    res.send(util.inspect(res));
 });
 
 router.get('/orange', function(req, res, next) {
 	res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ res: res, req: req }, null, 3));
+    res.send(util.inspect(res));
 });
 
 module.exports = router;
