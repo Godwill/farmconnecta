@@ -11,6 +11,30 @@
 
 <% include ../views/partials/nav %>
 
+<script type="text/javascript" src="http://jquery.offput.ca/js/jquery.timers.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+//    $(document).everyTime(1000, load);
+
+    function load() {
+      $.ajax({
+        url: "http://localhost/api/listings",
+        error: function(){
+          console.log('An error occurred');
+        },
+        success: function(){
+          $('#listings').append(data + '<br />');
+        },
+        timeout: 3000 // sets timeout to 3 seconds
+      });
+    }
+
+  });
+
+</script>
+
 <!-- Page Contents -->
 <div class="pusher">
   <div class="ui inverted vertical masthead center aligned segment" style="min-height: 100px;">
@@ -35,7 +59,7 @@
     <div class="ui text container">
       <h3 class="ui header">Latest Listings</h3>
 
-      <div>
+      <div id="listings">
         <% for(var i=0; i<listings.length; i++) {%>
         <div class="ui ignored info message">
           <h3><%= listings[i].sender %>

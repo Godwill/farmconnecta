@@ -5,6 +5,7 @@ node_modules/
 public/bower_components/
 vendor/
 .idea/
+const/
 CDN
 dev
 .DS_STORE

@@ -6,8 +6,18 @@ var express = require('express'),
     thinky = require('./../config/thinky.js'),
     r = thinky.r,
     type = thinky.type,
-    Listing = require('./../models/Listing');
+    Listing = require('./../models/Listing'),
+    Pusher = require('pusher');
 
+
+var pusher = new Pusher({
+    appId: constants.pusher.app_id,
+    key:  constants.pusher.key,
+    secret:  constants.pusher.secret,
+    encrypted: true
+});
+
+pusher.port = 443;
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -27,6 +37,11 @@ router.post('/orange/smsmo', function(req, res) {
 
     if(_.isEmpty(data) === false){
         listing.save().then(function(result){
+
+            pusher.trigger('sms_channel', 'new_sms', {
+                "listing": result
+            });
+
             console.log(result);
             res.status(200)
                 .send({ success: true}
@@ -51,6 +66,16 @@ router.get('/listings', function(req, res, next) {
         console.log(err);
         return res.json({message: err}).status(401);
     });
+});
+
+router.get('/api/listings', function(req, res, next) {
+
+    r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
+        return res.json(listings);
+    }).error(function(err){
+        return res.json({message: err}).status(401);
+    });
+
 });
 
 router.get('/login', function(req, res) {

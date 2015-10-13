@@ -43,6 +43,7 @@
     "moment-timezone": "^0.4.1",
     "morgan": "~1.6.1",
     "passwordless": "^1.1.0",
+    "pusher": "^1.0.6",
     "require-dot-file": "^0.4.0",
     "run-sequence": "^1.1.4",
     "semantic-ui": "^2.1.4",

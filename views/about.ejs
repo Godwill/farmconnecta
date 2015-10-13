@@ -11,6 +11,27 @@
 
 <% include ../views/partials/nav %>
 
+
+<script src="https://js.pusher.com/3.0/pusher.min.js"></script>
+<script>
+  // Enable pusher logging - don't include this in production
+  Pusher.log = function(message) {
+    if (window.console && window.console.log) {
+      window.console.log(message);
+    }
+  };
+
+  var pusher = new Pusher('7ee092bb700c969a086c', {
+    encrypted: true
+  });
+
+  var channel = pusher.subscribe('sms_channel');
+  channel.bind('new_sms', function(data) {
+    alert(data.message);
+  });
+
+</script>
+
 <!-- Page Contents -->
 <div class="pusher">
   <div class="ui inverted vertical masthead center aligned segment" style="min-height: 100px;">
