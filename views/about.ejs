@@ -33,19 +33,22 @@
 
   <div class="ui vertical centered stripe segment">
     <div class="ui text container">
-      <h3 class="ui header">Latest Listings</h3>
+      <h3 class="ui header">About Us</h3>
 
-      <div>
-        <% for(var i=0; i<listings.length; i++) {%>
-        <div class="ui ignored info message">
-          <h3><%= listings[i].sender %>
-            <span style="float:right;position: relative; display: inline-block; font-size: 12px;">
-              <%= moment(listings[i].date).fromNow();%>
-            </span></h3>
-          <p><%= listings[i].message %></p>
+      <div class="ui vertical centered stripe segment">
+        <div class="ui text container">
+          <h3 class="ui header">We are a farmers' marketplace</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam suscipit felis eros, ut pretium tellus tincidunt eu. Nulla ut imperdiet arcu. Fusce risus eros, molestie non consequat eget, pharetra at orci. Duis id porta nibh. Curabitur tincidunt, urna id posuere porttitor, leo est accumsan enim, et dignissim libero nibh id lorem.</p>
+          <a class="ui large button">Read More</a>
+
+          <h4 class="ui horizontal header divider"></h4>
+
+          <h3 class="ui header">We make it easy to sell livestock</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam suscipit felis eros, ut pretium tellus tincidunt eu. Nulla ut imperdiet arcu. Fusce risus eros, molestie non consequat eget, pharetra at orci. Duis id porta nibh. Curabitur tincidunt, urna id posuere porttitor, leo est accumsan enim, et dignissim libero nibh id lorem.</p>
+          <a class="ui large button">Get Started</a>
         </div>
-        <% } %>
       </div>
+
 
     </div>
   </div>

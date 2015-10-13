@@ -12,10 +12,22 @@ var express = require('express'),
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'FarmConnecta' });
+  next();
 });
 
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Login' });
+  next();
+});
+
+router.get('/about', function(req, res, next) {
+    res.render('about', { title: 'About' });
+    next();
+});
+
+router.get('/logout', function(req, res, next) {
+    console.log("I am being probed");
+    next();
 });
 
 router.post('/orange/smsmo', function(req, res, next) {
@@ -28,7 +40,6 @@ router.post('/orange/smsmo', function(req, res, next) {
         messageId: data.messageId,
         message: data.message
     });
-
 
     if(_.isEmpty(data) === false){
         listing.save().then(function(result){
@@ -58,13 +69,5 @@ router.get('/listings', function(req, res, next) {
 
 });
 
-router.get('/about', function(req, res, next) {
-    res.render('about', { title: 'About Us' });
-});
-
-router.get('/logout', function(req, res, next) {
-	console.log("I am being probed");
-    next();
-});
 
 module.exports = router;
