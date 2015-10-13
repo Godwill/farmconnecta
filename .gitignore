@@ -1,7 +1,6 @@
 *.sw*
 *~
 build/
-bin/
 node_modules/
 public/bower_components/
 vendor/
