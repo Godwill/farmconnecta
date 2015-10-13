@@ -7,7 +7,7 @@ var express = require('express'),
     r = thinky.r,
     type = thinky.type,
     Listing = require('./../models/Listing'),
-    secrets = require('./../config/secrets'),
+    secrets = require('./../secrets/secrets'),
     Pusher = require('pusher');
 
 
@@ -40,7 +40,7 @@ router.post('/orange/smsmo', function(req, res) {
         listing.save().then(function(result){
 
             pusher.trigger('sms_channel', 'new_sms', {
-                "listing": result
+                result: result
             });
 
             console.log(result);
