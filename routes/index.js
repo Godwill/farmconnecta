@@ -10,27 +10,11 @@ var express = require('express'),
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index', { title: 'FarmConnecta' });
-  next();
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Login' });
-  next();
-});
-
-router.get('/about', function(req, res, next) {
-    res.render('about', { title: 'About' });
-    next();
-});
-
-router.get('/logout', function(req, res, next) {
-    console.log("I am being probed");
-    next();
-});
-
-router.post('/orange/smsmo', function(req, res, next) {
+router.post('/orange/smsmo', function(req, res) {
 
     var data = req.body.inboundSMSMessageNotification.inboundSMSMessage;
 
@@ -54,6 +38,7 @@ router.post('/orange/smsmo', function(req, res, next) {
     }else{
         res.json({message: error});
     }
+
 });
 
 router.get('/listings', function(req, res, next) {
@@ -66,7 +51,18 @@ router.get('/listings', function(req, res, next) {
         console.log(err);
         return res.json({message: err}).status(401);
     });
+});
 
+router.get('/login', function(req, res) {
+    res.render('login', { title: 'Login' });
+});
+
+router.get('/about', function(req, res) {
+    res.render('about', { title: 'About' });
+});
+
+router.get('/logout', function(req, res) {
+    console.log("I am being probed");
 });
 
 
