@@ -1,6 +1,7 @@
 var express = require('express'),
     util = require('util'),
     router = express.Router(),
+    request = require('request'),
     _ = require('underscore'),
     moment = require('moment'),
     thinky = require('./../config/thinky.js'),
@@ -20,9 +21,46 @@ var pusher = new Pusher({
 
 pusher.port = 443;
 
+var chargeUser = function(){
+
+    var data = {
+        "endUserId":"tel:+99" + data.senderAddress,
+        "transactionOperationStatus":"Charged",
+        "chargingInformation":{
+            "description":"Test chargeAmount for the challenge documentation",
+            "amount":5,
+            "currency":"XOF"
+        },
+        chargingMetaData:{
+            "serviceID":"Test ServiceID #1",
+            "productID":"Test ProductID #1"
+        },
+        "referenceCode":"REF-TestReference" + data.messageId,
+        "clientCorrelator":"TestReference"  + data.messageId
+    };
+
+    request({
+        method: 'POST',
+        uri: 'https://api.sdp.orange.com/payment/v1/tel%3A%2B9' + data.senderAddress + '/transactions/amount',
+        headers: {
+            'Authorization': 'Bearer ' + secrets.orange.token,
+            'content-type': 'application/json'
+        },
+        json : data
+    }, function (error, response, body) {
+        if(response.statusCode == 201){
+            console.log("The response: ", response)
+        } else {
+            console.log('error: '+ response.statusCode)
+            console.log(body)
+        }
+    })
+};
+
+
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'FarmConnecta' });
+    res.render('index', { title: 'FarmConnecta' });
 });
 
 router.post('/orange/smsmo', function(req, res) {
@@ -37,22 +75,35 @@ router.post('/orange/smsmo', function(req, res) {
     });
 
     if(_.isEmpty(data) === false){
-        listing.save().then(function(result){
+        if(data.message === 'Subscribe'){
 
-            pusher.trigger('sms_channel', 'new_sms', {
-                result: result
+            console.log("Going in, the message contains ", data.message);
+
+            chargeUser();
+
+        }
+
+        if(data.message !== 'subscribe' || data.message !== 'Subscribe' || data.message !== 'SUBSCRIBE' ){
+
+            console.log("Going in, the message does not contains ", data.message);
+
+            listing.save().then(function(result){
+
+                pusher.trigger('sms_channel', 'new_sms', {
+                    result: result
+                });
+
+                console.log(result);
+                res.status(200)
+                    .send({ success: true}
+                );
+
+            }).error(function(err){
+                console.log({message: err});
             });
-
-            console.log(result);
-            res.status(200)
-                .send({ success: true}
-            );
-
-        }).error(function(err){
-            console.log({message: err});
-        });
-    }else{
-        res.json({message: error});
+        } else{
+            res.json({message: error});
+        }
     }
 
 });
