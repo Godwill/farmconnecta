@@ -14,6 +14,6 @@ var channel = pusher.subscribe('sms_channel');
 
 channel.bind('new_sms', function(data) {
     $('#listings').prepend(
-        "<div class='ui ignored info message'><h3>" + data.result.sender + "<span class='time-ago'>" + data.result.date + "</span></h3><p>" + data.result.message + "</p></div>"
+        "<div class='ui ignored info message'><h3>" + data.result.sender + "<span class='time-ago'>" + jQuery.timeago(data.result.date) + "</span></h3><p>" + data.result.message + "</p></div>"
     );
 });

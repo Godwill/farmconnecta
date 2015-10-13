@@ -63,7 +63,7 @@
         <% for(var i=0; i<listings.length; i++) {%>
         <div class="ui ignored info message">
           <h3><%= listings[i].sender %>
-            <span style="float:right;position: relative; display: inline-block; font-size: 12px;">
+            <span class="time-ago">
               <%= moment(listings[i].date).fromNow();%>
             </span></h3>
           <p><%= listings[i].message %></p>

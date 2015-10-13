@@ -90,3 +90,14 @@
     font-size: 1.5em;
   }
 }
+
+
+/*Custom Styles*/
+
+span.time-ago{
+  float: right;
+  position: relative;
+  display: inline-block;
+  font-size: 12px;
+  color: #9DC5D2;
+}
