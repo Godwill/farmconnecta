@@ -60,7 +60,6 @@ router.get('/listings', function(req, res, next) {
 
 router.get('/about', function(req, res, next) {
     res.render('about', { title: 'About Us' });
-    next();
 });
 
 router.get('/logout', function(req, res, next) {
