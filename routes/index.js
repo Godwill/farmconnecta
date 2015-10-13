@@ -7,13 +7,14 @@ var express = require('express'),
     r = thinky.r,
     type = thinky.type,
     Listing = require('./../models/Listing'),
+    secrets = require('./../config/secrets'),
     Pusher = require('pusher');
 
 
 var pusher = new Pusher({
-    appId: constants.pusher.app_id,
-    key:  constants.pusher.key,
-    secret:  constants.pusher.secret,
+    appId: secrets.pusher.app_id,
+    key:  secrets.pusher.key,
+    secret:  secrets.pusher.secret,
     encrypted: true
 });
 
