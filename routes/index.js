@@ -21,10 +21,12 @@ var pusher = new Pusher({
 
 pusher.port = 443;
 
-var chargeUser = function(){
+var chargeUser = function(data){
+
+    var usernum = data.senderAddress.substr(7);
 
     var data = {
-        "endUserId":"tel:+99" + data.senderAddress,
+        "endUserId":"tel:+99" + usernum,
         "transactionOperationStatus":"Charged",
         "chargingInformation":{
             "description":"Test chargeAmount for the challenge documentation",
@@ -41,7 +43,7 @@ var chargeUser = function(){
 
     request({
         method: 'POST',
-        uri: 'https://api.sdp.orange.com/payment/v1/tel%3A%2B9' + data.senderAddress + '/transactions/amount',
+        uri: 'https://api.sdp.orange.com/payment/v1/tel%3A%2B' + usernum + '/transactions/amount',
         headers: {
             'Authorization': 'Bearer ' + secrets.orange.token,
             'content-type': 'application/json'
@@ -75,11 +77,12 @@ router.post('/orange/smsmo', function(req, res) {
     });
 
     if(_.isEmpty(data) === false){
+
         if(data.message === 'Subscribe'){
 
             console.log("Going in, the message contains ", data.message);
 
-            chargeUser();
+            chargeUser(data);
 
         }
 
