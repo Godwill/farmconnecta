@@ -65,7 +65,7 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'FarmConnecta' });
 });
 
-router.post('/orange/smsmo', function(req, res) {
+router.post('/orange/smsmo', function(req, res, next) {
 
     var data = req.body.inboundSMSMessageNotification.inboundSMSMessage;
 
@@ -78,7 +78,9 @@ router.post('/orange/smsmo', function(req, res) {
 
     if(_.isEmpty(data) === false){
 
-        if(data.message === 'Subscribe'){
+        var subscribe = 'subscribe';
+
+        if(data.message.toUpperCase() === subscribe.toUpperCase()){
 
             console.log("Going in, the message contains ", data.message);
 
@@ -86,7 +88,7 @@ router.post('/orange/smsmo', function(req, res) {
 
         }
 
-        if(data.message !== 'subscribe' || data.message !== 'Subscribe' || data.message !== 'SUBSCRIBE' ){
+        if(data.message.toUpperCase() !== subscribe.toUpperCase()){
 
             console.log("Going in, the message does not contains ", data.message);
 
@@ -104,10 +106,10 @@ router.post('/orange/smsmo', function(req, res) {
             }).error(function(err){
                 console.log({message: err});
             });
-        } else{
-            res.json({message: error});
         }
     }
+
+    next();
 
 });
 
