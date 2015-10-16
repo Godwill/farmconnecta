@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser'),
     secrets = require('./secrets/secrets'),
     session = require('express-session'),
+    User = require('./models/User'),
     crypto = require('crypto'),
     passwordless = require('passwordless'),
     RethinkDBStore = require('passwordless-rethinkdbstore');
@@ -44,6 +45,16 @@ app.use(passwordless.sessionSupport());
 app.use(passwordless.acceptToken({ successRedirect: '/'}));
 
 
+app.use(function(req, res, next) {
+  if(req.user) {
+    User.findById(req.user, function(error, user) {
+      res.locals.user = user;
+      next();
+    });
+  } else {
+    next();
+  }
+});
 
 app.use('/', routes);
 app.use('/users', users);
