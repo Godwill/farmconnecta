@@ -9,14 +9,8 @@ passwordless.init(new RethinkDBStore({host: '127.0.0.1', port: 28015, db: 'farmc
 
 passwordless.addDelivery(
     function(tokenToSend, uidToSend, recipient, callback) {
-        var message = "Access your FarmConnecta account here : http://farmconnecta.com/?token"+ tokenToSend + '&uid=' + encodeURIComponent(uidToSend);
+        var message = "Access your FarmConnecta account here : http://farmconnecta.com/?token" + tokenToSend + '&uid=' + encodeURIComponent(uidToSend);
         orangeAPI.sendSMS(recipient, message)
-    }, function(err, message){
-        if(err) {
-            console.log(err);
-        }
-        console.log(message);
-        callback(err);
     });
 
 
