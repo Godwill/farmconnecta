@@ -8,8 +8,11 @@ var express = require('express'),
     r = thinky.r,
     type = thinky.type,
     Listing = require('./../models/Listing'),
+    orangeAPI = require('./../controllers/orange'),
     secrets = require('./../secrets/secrets'),
-    Pusher = require('pusher');
+    Pusher = require('pusher'),
+    passwordless = require('passwordless'),
+    RethinkDBStore = require('passwordless-rethinkdbstore');
 
 
 var pusher = new Pusher({
@@ -20,44 +23,6 @@ var pusher = new Pusher({
 });
 
 pusher.port = 443;
-
-var chargeUser = function(data){
-
-    var usernum = data.senderAddress.substr(7);
-
-    var data = {
-        "endUserId":"tel:+99" + usernum,
-        "transactionOperationStatus":"Charged",
-        "chargingInformation":{
-            "description":"Test chargeAmount for the challenge documentation",
-            "amount":5,
-            "currency":"XOF"
-        },
-        chargingMetaData:{
-            "serviceID":"Test ServiceID #1",
-            "productID":"Test ProductID #1"
-        },
-        "referenceCode":"REF-TestReference" + data.messageId,
-        "clientCorrelator":"TestReference"  + data.messageId
-    };
-
-    request({
-        method: 'POST',
-        uri: 'https://api.sdp.orange.com/payment/v1/tel%3A%2B' + usernum + '/transactions/amount',
-        headers: {
-            'Authorization': 'Bearer ' + secrets.orange.token,
-            'content-type': 'application/json'
-        },
-        json : data
-    }, function (error, response, body) {
-        if(response.statusCode == 201){
-            console.log("The response: ", response)
-        } else {
-            console.log('error: '+ response.statusCode)
-            console.log(body)
-        }
-    })
-};
 
 
 /* GET home page. */
@@ -84,7 +49,7 @@ router.post('/orange/smsmo', function(req, res, next) {
 
             console.log("Going in, the message contains ", data.message);
 
-            chargeUser(data);
+            orangeAPI.chargeUser(data);
 
         }
 
@@ -113,7 +78,9 @@ router.post('/orange/smsmo', function(req, res, next) {
 
 });
 
-router.get('/listings', function(req, res, next) {
+router.get('/listings',
+    passwordless.restricted(),
+    function(req, res, next) {
 
     var listings;
 
@@ -143,8 +110,10 @@ router.get('/about', function(req, res) {
     res.render('about', { title: 'About' });
 });
 
-router.get('/logout', function(req, res) {
-    console.log("I am being probed");
+router.get('/logout',
+    passwordless.logout(),
+    function(req, res) {
+        res.redirect('/');
 });
 
 
