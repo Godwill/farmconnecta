@@ -45,5 +45,6 @@ router.post('/sendtoken',
         // success!
         res.send("SMS sent");
     }
+);
 
 module.exports = router;
