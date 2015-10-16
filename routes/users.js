@@ -37,7 +37,7 @@ router.post('/sendtoken',
                 callback(null, null)
             });
             //callback(null, user);
-        }), { failureRedirect: '/login' }),
+        }, { failureRedirect: '/login' }),
     function(req, res) {
         console.log("Success");
         // success!
