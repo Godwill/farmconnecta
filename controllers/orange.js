@@ -1,3 +1,7 @@
+var request = require('request'),
+    secrets = require('./../secrets/secrets');
+
+
 var orange = {
 
     chargeUser : function(data){
@@ -55,8 +59,9 @@ var orange = {
             },
             json : postData
         }, function (error, response, body) {
+            console.log();
             if(response.statusCode == 201){
-                console.log("The response: ", response)
+                console.log("The response: ", response.body)
             } else {
                 console.log('error: '+ response.statusCode);
                 console.log(body);

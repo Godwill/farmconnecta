@@ -79,7 +79,6 @@ router.post('/orange/smsmo', function(req, res, next) {
 });
 
 router.get('/listings',
-    passwordless.restricted(),
     function(req, res, next) {
 
     var listings;

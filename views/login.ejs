@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
+
   <% include ../views/partials/head %>
 
   <style type="text/css">
@@ -19,25 +19,25 @@
     }
   </style>
   <script>
-  $(document)
-    .ready(function() {
-      $('.ui.form')
-        .form({
-          fields: {
-            email: {
-              identifier  : 'number',
-              rules: [
-                {
-                  type   : 'empty',
-                  prompt : 'Please enter your cellphone number'
-                }
-              ]
-            }
-          }
-        })
-      ;
-    })
-  ;
+    $(document)
+            .ready(function() {
+              $('.ui.form')
+                      .form({
+                        fields: {
+                          email: {
+                            identifier  : 'number',
+                            rules: [
+                              {
+                                type   : 'empty',
+                                prompt : 'Please enter your cellphone number'
+                              }
+                            ]
+                          }
+                        }
+                      })
+              ;
+            })
+    ;
   </script>
 </head>
 <body>
@@ -50,7 +50,7 @@
         Log-in to your account
       </div>
     </h2>
-    <form class="ui large form" action="/users/sendToken" method="POST">
+    <form class="ui large form" action="/users/sendtoken/" method="POST">
       <div class="ui stacked segment">
         <div class="field">
           <div class="ui left icon input">
@@ -59,10 +59,7 @@
           </div>
         </div>
 
-        <div class="ui fluid large teal submit button">
-          <input type="submit" value="Login"/>
-        </div>
-
+        <input class="ui fluid large teal submit button" type="submit" value="Login"/>
       </div>
 
       <div class="ui error message"></div>

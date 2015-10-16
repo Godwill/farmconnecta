@@ -9,33 +9,33 @@ passwordless.init(new RethinkDBStore({host: '127.0.0.1', port: 28015, db: 'farmc
 
 passwordless.addDelivery(
     function(tokenToSend, uidToSend, recipient, callback) {
-        var message = "Access your FarmConnecta account here : http://farmconnecta.com/?token"+ tokenToSend + '&uid='
-            + encodeURIComponent(uidToSend);
-
+        var message = "Access your FarmConnecta account here : http://farmconnecta.com/?token"+ tokenToSend + '&uid=' + encodeURIComponent(uidToSend);
         orangeAPI.sendSMS(recipient, message)
     });
 
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+    res.send('respond with a resource');
+    next();
 });
 
 /* POST login details. */
-router.post('/sendToken',
+router.post('/sendtoken',
     passwordless.requestToken(
         function(user, delivery, callback, req) {
-            User.findByNumber(number, function(err, user){
-                if(user){
-                    callback(null, user.id);
-                } else{
-                    callback(null, null)
+            User.findByNumber(req.body.user, function(err, user){
+                if(user.number === user){
+                    return callback(null, user.id)
                 }
+                callback(null, null)
             });
+            callback(null, user);
         }),
     function(req, res) {
         // success!
-        res.render('sent');
+        res.send("SMS sent");
+        next();
     });
 
 module.exports = router;
