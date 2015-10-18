@@ -8,6 +8,9 @@ var secrets = {
     },
     orange: {
         token: '10d937ce82ee24dbf4d51e8c07a9032'
+    },
+    session: {
+        secret: 'sephiri se se tona-tona-tona'
     }
 };
 
