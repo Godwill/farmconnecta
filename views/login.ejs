@@ -58,6 +58,22 @@
   </script>
 </head>
 <body>
+<% include ../views/partials/nav %>
+<!-- Page Contents -->
+<div class="pusher">
+  <div class="ui inverted vertical masthead center aligned segment" style="min-height: 100px;">
+
+    <div class="ui container">
+      <div class="ui large secondary inverted pointing menu">
+        <a class="toc item">
+          <i class="sidebar icon"></i>
+        </a>
+        <a class="item" href="/">Home</a>
+        <a class="item" href="/about">About</a>
+        <a class="item" href="/listings">Listings</a>
+       </div>
+    </div>
+  </div>
 
 <div class="ui middle aligned center aligned grid">
   <div class="column">
@@ -94,6 +110,9 @@
   </div>
 </div>
 
+ <% include ../views/partials/footer %>
+
+</div>
 </body>
 
 </html>
