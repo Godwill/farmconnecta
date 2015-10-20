@@ -1,5 +1,10 @@
 .ui.inverted.segment, .ui.primary.inverted.segment{
-  background: #71b573;
+      background: rgba(57, 136, 76, 0.78);
+      background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
 }
 
 .ui.secondary.inverted.pointing.menu{
@@ -100,4 +105,28 @@ span.time-ago{
   display: inline-block;
   font-size: 12px;
   color: #9DC5D2;
+}
+
+.ui.text.container {
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    max-width: 700px !important;
+}
+
+.ui[class*="center aligned"].grid {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    min-height: 777px;
+        background: rgb(249, 246, 246);
+
+}
+
+
+hr {
+      position: relative;
+    top: 26px;
+    max-width: 100%;
+    border-color: #ECF5F4;
+    border-width: 1px;
 }
