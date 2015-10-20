@@ -44,6 +44,8 @@ var orange = {
 
     sendSMS : function(usernum, message){
 
+        console.log(message);
+
         var postData = {
             "address":["tel:+99" + usernum],
             "senderName":"FarmConnecta",
