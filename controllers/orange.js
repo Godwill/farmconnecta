@@ -67,8 +67,36 @@ var orange = {
                 console.log(body);
             }
         })
+    },
+
+    ussdService : function(usernum, message){
+
+        var postData = {
+            "address":["tel:+99" + usernum],
+            "senderName":"FarmConnecta",
+            "message": message
+        };
+
+        request({
+            method: 'POST',
+            uri: 'GET https://www.farmconnecta.com/orange/ussd/ HTTP/1.1 ' + usernum + '/requests',
+            headers: {
+                'Authorization': 'Bearer ' + secrets.orange.token,
+                'content-type': 'application/json'
+            },
+            json : postData
+        }, function (error, response, body) {
+            console.log();
+            if(response.statusCode == 201){
+                console.log("The response: ", response.body)
+            } else {
+                console.log('error: '+ response.statusCode);
+                console.log(body);
+            }
+        })
     }
 
 };
+
 
 module.exports = orange;
