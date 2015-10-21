@@ -25,12 +25,14 @@ router.post('/sendtoken',
     passwordless.requestToken(
         function(user, delivery, callback, req) {
             User.findByNumber(req.body.user, function(err, user) {
-                if (user.number === user) {
-                    return callback(null, user.id)
+                if(user){
+                    if (user.number === user) {
+                        return callback(null, user.id)
+                    }else{
+                        callback(null, null);
+                    }
+                    callback(null, user);
                 }
-                callback(null, null);
-
-                //callback(null, user);
 
             })
         }, { failureRedirect: '/login' }),
