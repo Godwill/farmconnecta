@@ -36,9 +36,9 @@ router.post('/orange/smsdr', function(req, res, next) {
     next();
 });
 
-router.post('/orange/ussd', function(req, res, next) {
+router.get('/orange/ussd', function(req, res, next) {
     console.log("Request: ", req.body);
-    console.log("Response: ", res);
+    //console.log("Response: ", res);
     res.render('ussd/index');
     next();
 });
