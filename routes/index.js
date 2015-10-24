@@ -30,6 +30,19 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'FarmConnecta' });
 });
 
+router.post('/orange/smsdr', function(req, res, next) {
+    console.log("Request: ", req.body);
+    console.log("Response: ", res);
+    next();
+});
+
+router.post('/orange/ussd', function(req, res, next) {
+    console.log("Request: ", req.body);
+    console.log("Response: ", res);
+    res.render('ussd/index');
+    next();
+});
+
 router.post('/orange/smsmo', function(req, res, next) {
 
     var data = req.body.inboundSMSMessageNotification.inboundSMSMessage;
