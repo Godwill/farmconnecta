@@ -40,8 +40,26 @@ router.get('/orange/ussd', function(req, res, next) {
     console.log("Request: ", req.body);
     //console.log("Response: ", res);
     res.render('ussd/index');
-    next();
 });
+
+router.get('/orange/ussd/subscribe', function(req, res, next) {
+    var data = {
+        senderAddress: req.headers['user-msisdn'],
+        messageId: req.headers['activityid']
+    }
+    orangeAPI.chargeUser(data);
+});
+
+router.get('/orange/ussd/matimela', function(req, res, next) {
+    console.log("Headers: ", req.headers);
+});
+
+
+router.get('/orange/ussd/orange/ussd/matimela', function(req, res, next) {
+    console.log("Req: ", req);
+    console.log("Query: ", req.query);
+});
+
 
 router.post('/orange/smsmo', function(req, res, next) {
 
@@ -94,15 +112,15 @@ router.post('/orange/smsmo', function(req, res, next) {
 router.get('/listings',
     function(req, res, next) {
 
-    var listings;
+        var listings;
 
-    r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
-        res.render('listings', {'listings': listings, 'moment' : moment});
-    }).error(function(err){
-        console.log(err);
-        return res.json({message: err}).status(401);
+        r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
+            res.render('listings', {'listings': listings, 'moment' : moment});
+        }).error(function(err){
+            console.log(err);
+            return res.json({message: err}).status(401);
+        });
     });
-});
 
 router.get('/api/listings', function(req, res, next) {
 
@@ -126,7 +144,7 @@ router.get('/logout',
     passwordless.logout(),
     function(req, res) {
         res.redirect('/');
-});
+    });
 
 
 module.exports = router;

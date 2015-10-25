@@ -6,7 +6,7 @@ var orange = {
 
     chargeUser : function(data){
 
-        var usernum = data.senderAddress.substr(7);
+        usernum = data.senderAddress.substr(7);
 
         var postData = {
             "endUserId":"tel:+99" + usernum,
