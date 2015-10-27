@@ -8,11 +8,12 @@ var express = require('express'),
     r = thinky.r,
     type = thinky.type,
     Listing = require('./../models/Listing'),
+    Farmer = require('./../models/Farmer'),
     orangeAPI = require('./../controllers/orange'),
     secrets = require('./../secrets/secrets'),
     Pusher = require('pusher'),
     passwordless = require('passwordless'),
-    RethinkDBStore = require('passwordless-rethinkdbstore');
+    RethinkDBStore = require('Matimelapasswordless-rethinkdbstore');
 
 
 var pusher = new Pusher({
@@ -46,18 +47,46 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
     var data = {
         senderAddress: req.headers['user-msisdn'],
         messageId: req.headers['activityid']
-    }
+    };
     orangeAPI.chargeUser(data);
 });
 
 router.get('/orange/ussd/matimela', function(req, res, next) {
-    console.log("Headers: ", req.headers);
+    //console.log("Headers: ", req.headers);
+    log(req.query);
 });
 
 
+var log = function(x){
+    console.log(x);
+}
+
 router.get('/orange/ussd/orange/ussd/matimela', function(req, res, next) {
-    console.log("Req: ", req);
-    console.log("Query: ", req.query);
+    //console.log("Req: ", req);
+    //console.log("Query: ", req.query);
+
+
+    //log(req.query);
+
+    var number = req.headers['user-msisdn'].substr(7);
+
+    var farmer = new Farmer({
+        number: number,
+        brand: req.query.response
+    });
+
+    farmer.save().then(function(result){
+
+        console.log(result);
+        res.status(200)
+            .send({ success: true}
+        );
+
+    }).error(function(err){
+        console.log({message: err});
+    });
+
+    next();
 });
 
 
@@ -116,6 +145,20 @@ router.get('/listings',
 
         r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
             res.render('listings', {'listings': listings, 'moment' : moment});
+        }).error(function(err){
+            console.log(err);
+            return res.json({message: err}).status(401);
+        });
+    });
+
+router.get('/farmers',
+    function(req, res, next) {
+
+        var farmers;
+
+        r.table("Farmer").orderBy(r.desc('dateCreated')).run().then(function(farmers){
+            res.json(farmers);
+            //res.render('listings', {'listings': fa, 'moment' : moment});
         }).error(function(err){
             console.log(err);
             return res.json({message: err}).status(401);
