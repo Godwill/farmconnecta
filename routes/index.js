@@ -13,7 +13,7 @@ var express = require('express'),
     secrets = require('./../secrets/secrets'),
     Pusher = require('pusher'),
     passwordless = require('passwordless'),
-    RethinkDBStore = require('Matimelapasswordless-rethinkdbstore');
+    RethinkDBStore = require('passwordless-rethinkdbstore');
 
 
 var pusher = new Pusher({
