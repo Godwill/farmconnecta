@@ -57,10 +57,10 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
 router.get('/orange/ussd/matimela', function(req, res, next) {
     var number = req.headers['user-msisdn'].substr(7);
 
-    var farmer = new Farmer({ejs = require("ejs")
+    var farmer = new Farmer({
         number: number,
         brand: req.query.response
-        });
+    });
 
     farmer.save().then(function(result){
 
