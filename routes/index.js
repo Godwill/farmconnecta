@@ -1,5 +1,8 @@
 var express = require('express'),
+    path = require('path'),
     util = require('util'),
+    fs = require('fs'),
+    ejs = require('ejs'),
     router = express.Router(),
     request = require('request'),
     _ = require('underscore'),
@@ -52,43 +55,42 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
 });
 
 router.get('/orange/ussd/matimela', function(req, res, next) {
-    //console.log("Headers: ", req.headers);
-    log(req.query);
-});
-
-
-var log = function(x){
-    console.log(x);
-}
-
-router.get('/orange/ussd/orange/ussd/matimela', function(req, res, next) {
-    //console.log("Req: ", req);
-    //console.log("Query: ", req.query);
-
-
-    //log(req.query);
-
     var number = req.headers['user-msisdn'].substr(7);
 
-    var farmer = new Farmer({
+    var farmer = new Farmer({ejs = require("ejs")
         number: number,
         brand: req.query.response
-    });
+        });
 
     farmer.save().then(function(result){
 
         console.log(result);
-        res.status(200)
-            .send({ success: true}
-        );
+        res.sendFile(path.join(__dirname, '../orange/ussd', 'end.html'));
 
     }).error(function(err){
         console.log({message: err});
     });
 
-    next();
 });
 
+var ejs2html = function (path, information) {
+    fs.readFile(path, 'utf8', function (err, data) {
+        if (err) { console.log(err); return false; }
+        var ejs_string = data,
+            template = ejs.compile(ejs_string),
+            html = template(information);
+        fs.writeFile(path + '../orange/ussd/listings.html', html, function(err) {
+            if(err) { console.log(err); return false }
+            return true;
+        });
+    });
+}
+
+ejs2html(path.join(__dirname, '../views/' , 'listings.html'));
+
+router.get('/orange/ussd/listings', function(req, res, next) {
+
+});
 
 router.post('/orange/smsmo', function(req, res, next) {
 
