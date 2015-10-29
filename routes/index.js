@@ -86,7 +86,7 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
                         keyword: req.query.response
                     };
 
-                    user.save().then(function(result){
+                    user.get(number).update(user).run().then(function(result){
                         console.log(result);
                         res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
                     }).error(function(err){
@@ -131,7 +131,7 @@ router.get('/orange/ussd/matimela', function(req, res, next) {
                         brand: req.query.response
                     };
 
-                    user.save().then(function(result){
+                    user.get(number).update(user).run().then(function(result){
                         console.log(result);
                         res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
                     }).error(function(err){
