@@ -11,7 +11,7 @@ var express = require('express'),
     r = thinky.r,
     type = thinky.type,
     Listing = require('./../models/Listing'),
-    Farmer = require('./../models/Farmer'),
+    User = require('./../models/User'),
     orangeAPI = require('./../controllers/orange'),
     secrets = require('./../secrets/secrets'),
     Pusher = require('pusher'),
@@ -203,8 +203,6 @@ router.post('/orange/smsmo', function(req, res, next) {
         }
     }
 
-    next();
-
 });
 
 router.get('/listings', function(req, res, next) {
@@ -219,12 +217,12 @@ router.get('/listings', function(req, res, next) {
         });
     });
 
-router.get('/farmers', function(req, res, next) {
+router.get('/users', function(req, res, next) {
 
-        var farmers;
+        var users;
 
-        r.table("Farmer").orderBy(r.desc('dateCreated')).run().then(function(farmers){
-            res.json(farmers);
+        r.table("User").orderBy(r.desc('dateCreated')).run().then(function(users){
+            res.json(users);
             //res.render('listings', {'listings': fa, 'moment' : moment});
         }).error(function(err){
             console.log(err);
