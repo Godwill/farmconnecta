@@ -40,10 +40,16 @@ router.post('/orange/smsdr', function(req, res, next) {
     next();
 });
 
+router.get('/orange/smsdr', function(req, res, next) {
+    console.log("Request: ", req.body);
+    console.log("Response: ", res);
+    next();
+});
+
 router.get('/orange/ussd', function(req, res, next) {
     console.log("Request: ", req.body);
     //console.log("Response: ", res);
-    res.render('ussd/index');
+    res.sendFile(path.join(__dirname, '../views/ussd', 'index.html'));
 });
 
 router.get('/orange/ussd/subscribe', function(req, res, next) {
@@ -79,17 +85,16 @@ var ejs2html = function (path, information) {
         var ejs_string = data,
             template = ejs.compile(ejs_string),
             html = template(information);
-        fs.writeFile(path + '../orange/ussd/listings.html', html, function(err) {
+        fs.writeFile(path + '.html', html, function(err) {
             if(err) { console.log(err); return false }
             return true;
         });
     });
-}
+};
 
-ejs2html(path.join(__dirname, '../views/' , 'listings.html'));
 
 router.get('/orange/ussd/listings', function(req, res, next) {
-
+    ejs2html(path.join(__dirname, '../views/' , 'listings.ejs'));
 });
 
 router.post('/orange/smsmo', function(req, res, next) {

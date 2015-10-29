@@ -3,13 +3,100 @@
 
 <head>
 
-  <% include ../views/partials/head %>
+  <!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properities -->
+  <title>FarmConnecta - Twitter for Farmers</title>
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/reset.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/site.css">
+
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/container.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/grid.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/header.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/image.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/menu.css">
+
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/divider.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/dropdown.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/segment.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/input.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/button.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/list.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/icon.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/form.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/message.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/sidebar.css">
+  <link rel="stylesheet" type="text/css" href="../semantic/dist/components/transition.css">
+
+  <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+
+  <script src="../jquery/dist/jquery.min.js"></script>
+  <script src="../semantic/dist/components/visibility.js"></script>
+  <script src="../semantic/dist/components/sidebar.js"></script>
+  <script src="../semantic/dist/components/form.js"></script>
+  <script src="../semantic/dist/components/transition.js"></script>
+
+  <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
+
+  <script src="../js/timeago.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    $(document)
+            .ready(function() {
+
+              // fix menu when passed
+              $('.masthead')
+                      .visibility({
+                        once: false,
+                        onBottomPassed: function() {
+                          $('.fixed.menu').transition('fade in');
+                        },
+                        onBottomPassedReverse: function() {
+                          $('.fixed.menu').transition('fade out');
+                        }
+                      })
+              ;
+
+              // create sidebar and attach to menu open
+              $('.ui.sidebar')
+                      .sidebar('attach events', '.toc.item')
+              ;
+
+            })
+    ;
+  </script>
 
 </head>
 
 <body>
 
-<% include ../views/partials/nav %>
+<!-- Following Menu -->
+<div class="ui large top fixed hidden menu">
+  <div class="ui container">
+    <a class="active item">Home</a>
+    <a class="item" href="/about">About</a>
+    <a class="item" href="/listings">Listings</a>
+    <div class="right menu">
+      <div class="item">
+        <a class="ui button" href="/login">Log in</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Menu -->
+<div class="ui vertical inverted sidebar menu">
+  <a class="active item">Home</a>
+  <a class="item" href="/about">About</a>
+  <a class="item" href="/listings">Listings</a>
+  <a class="item" href="/login">Login</a>
+</div>
+
 
 <script type="text/javascript" src="http://jquery.offput.ca/js/jquery.timers.js"></script>
 <script type="text/javascript">
@@ -60,21 +147,35 @@
       <h3 class="ui header">Latest Listings</h3>
 
       <div id="listings">
-        <% for(var i=0; i<listings.length; i++) {%>
-        <div class="ui ignored info message">
-          <h3><%= listings[i].sender %>
-            <span class="time-ago">
-              <%= moment(listings[i].date).fromNow();%>
-            </span></h3>
-          <p><%= listings[i].message %></p>
-        </div>
+        <% if (this.listings) { %>
+          <% for(var i=0; i<listings.length; i++) {%>
+          <div class="ui ignored info message">
+            <h3><%= listings[i].sender %>
+              <span class="time-ago">
+                <%= moment(listings[i].date).fromNow();%>
+              </span></h3>
+            <p><%= listings[i].message %></p>
+          </div>
+          <% } %>
         <% } %>
       </div>
 
     </div>
   </div>
 
-  <% include ../views/partials/footer %>
+  <div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+      <div class="ui inverted section divider"></div>
+      <img src="assets/images/logo.png" class="ui centered mini image">
+      <div class="ui horizontal inverted small divided link list">
+        <a class="item" href="#">Site Map</a>
+        <a class="item" href="#">Contact Us</a>
+        <a class="item" href="#">Terms and Conditions</a>
+        <a class="item" href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 

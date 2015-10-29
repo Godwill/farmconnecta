@@ -10,7 +10,7 @@ passwordless.init(new RethinkDBStore({host: '127.0.0.1', port: 28015, db: 'farmc
 passwordless.addDelivery(
     function(tokenToSend, uidToSend, recipient, callback) {
         var message = "Access your FarmConnecta account here : http://farmconnecta.com/?token" + tokenToSend + '&uid=' + encodeURIComponent(uidToSend);
-        orangeAPI.sendSMS(recipient, message)
+        orangeAPI.sendSMS(recipient, message);
     });
 
 
@@ -27,15 +27,14 @@ router.post('/sendtoken',
             User.findByNumber(req.body.user, function(err, user) {
                 if(user){
                     if (user.number === user) {
-                        return callback(null, user.id)
+                        return callback(null, user.id);
                     }else{
                         callback(null, null);
                     }
-                    callback(null, user);
                 }
-
-            })
-        }, { failureRedirect: '/login' }),
+            });
+            callback(null, user);
+        }),
     function(req, res) {
         console.log("Success");
         // success!
