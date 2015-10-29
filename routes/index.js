@@ -53,11 +53,32 @@ router.get('/orange/ussd', function(req, res, next) {
 });
 
 router.get('/orange/ussd/subscribe', function(req, res, next) {
+
     var data = {
         senderAddress: req.headers['user-msisdn'],
         messageId: req.headers['activityid']
     };
-    orangeAPI.chargeUser(data);
+
+    orangeAPI.chargeUser(data, function(res){
+        console.log(res)
+    });
+
+    //var number = req.headers['user-msisdn'].substr(7);
+    //
+    //var farmer = new Farmer({
+    //    number: number,
+    //    brand: req.query.response
+    //});
+    //
+    //farmer.save().then(function(result){
+    //
+    //    console.log(result);
+    //    res.sendFile(path.join(__dirname, '../orange/ussd', 'end.html'));
+    //
+    //}).error(function(err){
+    //    console.log({message: err});
+    //});
+
 });
 
 router.get('/orange/ussd/matimela', function(req, res, next) {
@@ -79,22 +100,16 @@ router.get('/orange/ussd/matimela', function(req, res, next) {
 
 });
 
-var ejs2html = function (path, information) {
-    fs.readFile(path, 'utf8', function (err, data) {
-        if (err) { console.log(err); return false; }
-        var ejs_string = data,
-            template = ejs.compile(ejs_string),
-            html = template(information);
-        fs.writeFile(path + '.html', html, function(err) {
-            if(err) { console.log(err); return false }
-            return true;
-        });
-    });
-};
-
-
 router.get('/orange/ussd/listings', function(req, res, next) {
-    ejs2html(path.join(__dirname, '../views/' , 'listings.ejs'));
+
+    var listings;
+
+    r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
+        res.render('listings_ussd', {'listings': listings, 'moment' : moment});
+    }).error(function(err){
+        console.log(err);
+        return res.json({message: err}).status(401);
+    });
 });
 
 router.post('/orange/smsmo', function(req, res, next) {
@@ -145,8 +160,7 @@ router.post('/orange/smsmo', function(req, res, next) {
 
 });
 
-router.get('/listings',
-    function(req, res, next) {
+router.get('/listings', function(req, res, next) {
 
         var listings;
 
@@ -158,8 +172,7 @@ router.get('/listings',
         });
     });
 
-router.get('/farmers',
-    function(req, res, next) {
+router.get('/farmers', function(req, res, next) {
 
         var farmers;
 

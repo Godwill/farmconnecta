@@ -4,7 +4,7 @@ var request = require('request'),
 
 var orange = {
 
-    chargeUser : function(data){
+    chargeUser : function(data, cb){
 
         usernum = data.senderAddress.substr(7);
 
@@ -33,11 +33,13 @@ var orange = {
             },
             json : postData
         }, function (error, response, body) {
-            if(response.statusCode == 201){
-                console.log("The response: ", response)
+            cb(body);
+            if(response.statusCode === 201){
+                console.log("The response: ", response);
+                return body;
             } else {
-                console.log('error: '+ response.statusCode)
-                console.log(body)
+                console.log('error: '+ response.statusCode);
+                console.log(body);
             }
         })
     },
