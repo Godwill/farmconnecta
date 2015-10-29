@@ -60,44 +60,55 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
     };
 
     orangeAPI.chargeUser(data, 5, function(body){
-        if(body.amountTransaction.transactionOperationStatus === 'Charged'){
+        console.log("The body: ", body);
 
-            var number = body.amountTransaction.endUserId.substr(7);
-
-            User.findById('number', function(err, _user){
-                var user = {};
-                if(!_user){
-                    user = new User({
-                        id: number,
-                        number: number,
-                        keyword: req.query.response
-                    });
-                    user.save().then(function(result){
-                        console.log(result);
-                        res.sendFile(path.join(__dirname, '../orange/ussd', 'end-subscriber.html'));
-                    }).error(function(err){
-                        console.log({message: err});
-                    });
-                }
-
-                if(_user){
-                    user = {
-                        keyword: req.query.response
-                    };
-
-                    r.table("User").get(number).update(user).run().then(function(result){
-                        console.log(result);
-                        res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
-                    }).error(function(err){
-                        console.log({message: err});
-                    });
-                }
-            });
-
-        } else{
+        if(body.requestError){
             res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
         }
-        console.log("Here comes the res from the CB: ", res);
+
+        if(body.amountTransaction){
+            if(body.amountTransaction.transactionOperationStatus === 'Charged'){
+
+                var number = body.amountTransaction.endUserId.substr(7);
+
+                r.table("User").get(number).run().then(function(result){
+                    var user = {};
+                    console.log("The user response: ", result);
+                    if(result){
+                        user = {
+                            keyword: req.query.response,
+                            dateUpdated: Date.now()
+                        };
+
+                        r.table("User").get(number).update(user).run().then(function(result){
+                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
+                            console.log(result);
+                        }).error(function(err){
+                            console.log({message: err});
+                        });
+                    }
+
+                    if(!result){
+                        user = new User({
+                            id: number,
+                            number: number,
+                            keyword: req.query.response
+                        });
+                        user.save().then(function(result){
+                            console.log(result);
+                            res.sendFile(path.join(__dirname, '../orange/ussd', 'end-subscriber.html'));
+                        }).error(function(err){
+                            console.log({message: err});
+                        });
+                    }
+
+                });
+
+            } else{
+                res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+            }
+        }
+
     });
 
 });
@@ -105,44 +116,52 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
 router.get('/orange/ussd/matimela', function(req, res, next) {
 
     orangeAPI.chargeUser(data, 5, function(body){
-        if(body.amountTransaction.transactionOperationStatus === 'Charged'){
-
-            var number = body.headers['user-msisdn'].substr(7);
-
-            User.findById('number', function(err, _user){
-                var user = {};
-                if(!_user){
-                    user = new User({
-                        id: number,
-                        number: number,
-                        brand: req.query.response
-                    });
-                    user.save().then(function(result){
-                        console.log(result);
-                        res.sendFile(path.join(__dirname, '../orange/ussd', 'end-subscriber.html'));
-                    }).error(function(err){
-                        console.log({message: err});
-                    });
-                }
-
-                if(_user){
-                    user = {
-                        brand: req.query.response
-                    };
-
-                    r.table("User").get(number).update(user).run().then(function(result){
-                        console.log(result);
-                        res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
-                    }).error(function(err){
-                        console.log({message: err});
-                    });
-                }
-            });
-
-        } else{
+        if(body.requestError) {
             res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
         }
-        console.log("Here comes the res from the CB: ", res)
+
+        if(body.amountTransaction){
+            if(body.amountTransaction.transactionOperationStatus === 'Charged'){
+
+                var number = body.headers['user-msisdn'].substr(7);
+                r.table("User").get(number).run().then(function(result){
+                    var user = {};
+                    console.log("The user response: ", result);
+                    if(result){
+                        user = {
+                            brand: req.query.response,
+                            dateUpdated: Date.now()
+                        };
+
+                        r.table("User").get(number).update(user).run().then(function(result){
+                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
+                            console.log(result);
+                        }).error(function(err){
+                            console.log({message: err});
+                        });
+                    }
+
+                    if(!result){
+                        user = new User({
+                            id: number,
+                            number: number,
+                            brand: req.query.response
+                        });
+                        user.save().then(function(result){
+                            console.log(result);
+                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+                        }).error(function(err){
+                            console.log({message: err});
+                        });
+                    }
+
+                });
+
+            } else{
+                res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+            }
+        }
+
     });
 });
 
@@ -206,28 +225,28 @@ router.post('/orange/smsmo', function(req, res, next) {
 
 router.get('/listings', function(req, res, next) {
 
-        var listings;
+    var listings;
 
-        r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
-            res.render('listings', {'listings': listings, 'moment' : moment});
-        }).error(function(err){
-            console.log(err);
-            return res.json({message: err}).status(401);
-        });
+    r.table("Listing").orderBy(r.desc('date')).run().then(function(listings){
+        res.render('listings', {'listings': listings, 'moment' : moment});
+    }).error(function(err){
+        console.log(err);
+        return res.json({message: err}).status(401);
     });
+});
 
 router.get('/users', function(req, res, next) {
 
-        var users;
+    var users;
 
-        r.table("User").orderBy(r.desc('dateCreated')).run().then(function(users){
-            res.json(users);
-            //res.render('listings', {'listings': fa, 'moment' : moment});
-        }).error(function(err){
-            console.log(err);
-            return res.json({message: err}).status(401);
-        });
+    r.table("User").orderBy(r.desc('dateCreated')).run().then(function(users){
+        res.json(users);
+        //res.render('listings', {'listings': fa, 'moment' : moment});
+    }).error(function(err){
+        console.log(err);
+        return res.json({message: err}).status(401);
     });
+});
 
 router.get('/api/listings', function(req, res, next) {
 

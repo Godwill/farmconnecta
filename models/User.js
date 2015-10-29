@@ -11,7 +11,8 @@ var User = thinky.createModel("User", {
     number: type.string(),
     brand: type.string(),
     keyword: type.string(),
-    dateCreated: type.date().default(r.now())
+    dateCreated: type.date().default(r.now()),
+    dateUpdated: type.date().default(r.now())
 });
 
 User.ensureIndex("number");
