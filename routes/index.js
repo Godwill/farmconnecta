@@ -96,7 +96,7 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
                         });
                         user.save().then(function(result){
                             console.log(result);
-                            res.sendFile(path.join(__dirname, '../orange/ussd', 'end-subscriber.html'));
+                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
                         }).error(function(err){
                             console.log({message: err});
                         });
@@ -114,6 +114,11 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
 });
 
 router.get('/orange/ussd/matimela', function(req, res, next) {
+
+    var data = {
+        senderAddress: req.headers['user-msisdn'],
+        messageId: req.headers['activityid']
+    };
 
     orangeAPI.chargeUser(data, 5, function(body){
         if(body.requestError) {
