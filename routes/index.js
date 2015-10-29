@@ -59,10 +59,10 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
         messageId: req.headers['activityid']
     };
 
-    orangeAPI.chargeUser(data, 5, function(res){
-        if(res.amountTransaction.transactionOperationStatus === 'Charged'){
+    orangeAPI.chargeUser(data, 5, function(body){
+        if(body.amountTransaction.transactionOperationStatus === 'Charged'){
 
-            var number = res.amountTransaction.endUserId.substr(7);
+            var number = body.amountTransaction.endUserId.substr(7);
 
             User.findById('number', function(err, _user){
                 var user = {};
@@ -105,10 +105,10 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
 
 router.get('/orange/ussd/matimela', function(req, res, next) {
 
-    orangeAPI.chargeUser(data, 5, function(res){
-        if(res.amountTransaction.transactionOperationStatus === 'Charged'){
+    orangeAPI.chargeUser(data, 5, function(body){
+        if(body.amountTransaction.transactionOperationStatus === 'Charged'){
 
-            var number = req.headers['user-msisdn'].substr(7);
+            var number = body.headers['user-msisdn'].substr(7);
 
             User.findById('number', function(err, _user){
                 var user = {};
