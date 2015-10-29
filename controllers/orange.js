@@ -4,7 +4,7 @@ var request = require('request'),
 
 var orange = {
 
-    chargeUser : function(data, cb){
+    chargeUser : function(data, amount, cb){
 
         usernum = data.senderAddress.substr(7);
 
@@ -13,7 +13,7 @@ var orange = {
             "transactionOperationStatus":"Charged",
             "chargingInformation":{
                 "description":"Test chargeAmount for the challenge documentation",
-                "amount":5,
+                "amount": amount,
                 "currency":"XOF"
             },
             chargingMetaData:{

@@ -12,6 +12,7 @@ var express = require('express'),
     type = thinky.type,
     Listing = require('./../models/Listing'),
     Farmer = require('./../models/Farmer'),
+    Subscriber = require('./../models/Subscriber'),
     orangeAPI = require('./../controllers/orange'),
     secrets = require('./../secrets/secrets'),
     Pusher = require('pusher'),
@@ -59,45 +60,92 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
         messageId: req.headers['activityid']
     };
 
-    orangeAPI.chargeUser(data, function(res){
-        console.log(res)
-    });
+    orangeAPI.chargeUser(data, 5, function(res){
+        if(res.amountTransaction.transactionOperationStatus === 'Charged'){
 
-    //var number = req.headers['user-msisdn'].substr(7);
-    //
-    //var farmer = new Farmer({
-    //    number: number,
-    //    brand: req.query.response
-    //});
-    //
-    //farmer.save().then(function(result){
-    //
-    //    console.log(result);
-    //    res.sendFile(path.join(__dirname, '../orange/ussd', 'end.html'));
-    //
-    //}).error(function(err){
-    //    console.log({message: err});
-    //});
+            var number = res.amountTransaction.endUserId.substr(7);
+
+            User.findById('number', function(err, _user){
+                var user = {};
+                if(!_user){
+                    user = new User({
+                        id: number,
+                        number: number,
+                        keyword: req.query.response
+                    });
+                    user.save().then(function(result){
+                        console.log(result);
+                        res.sendFile(path.join(__dirname, '../orange/ussd', 'end-subscriber.html'));
+                    }).error(function(err){
+                        console.log({message: err});
+                    });
+                }
+
+                if(_user){
+                    user = {
+                        number: number,
+                        keyword: req.query.response
+                    };
+
+                    user.save().then(function(result){
+                        console.log(result);
+                        res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
+                    }).error(function(err){
+                        console.log({message: err});
+                    });
+                }
+            });
+
+        } else{
+            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+        }
+        console.log("Here comes the res from the CB: ", res);
+    });
 
 });
 
 router.get('/orange/ussd/matimela', function(req, res, next) {
-    var number = req.headers['user-msisdn'].substr(7);
 
-    var farmer = new Farmer({
-        number: number,
-        brand: req.query.response
+    orangeAPI.chargeUser(data, 5, function(res){
+        if(res.amountTransaction.transactionOperationStatus === 'Charged'){
+
+            var number = req.headers['user-msisdn'].substr(7);
+
+            User.findById('number', function(err, _user){
+                var user = {};
+                if(!_user){
+                    user = new User({
+                        id: number,
+                        number: number,
+                        brand: req.query.response
+                    });
+                    user.save().then(function(result){
+                        console.log(result);
+                        res.sendFile(path.join(__dirname, '../orange/ussd', 'end-subscriber.html'));
+                    }).error(function(err){
+                        console.log({message: err});
+                    });
+                }
+
+                if(_user){
+                    user = {
+                        brand: req.query.response
+                    };
+
+                    user.save().then(function(result){
+                        console.log(result);
+                        res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
+                    }).error(function(err){
+                        console.log({message: err});
+                    });
+                }
+            });
+
+        } else{
+            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+        }
+        console.log("Here comes the res from the CB: ", res)
     });
-
-    farmer.save().then(function(result){
-
-        console.log(result);
-        res.sendFile(path.join(__dirname, '../orange/ussd', 'end.html'));
-
-    }).error(function(err){
-        console.log({message: err});
-    });
-
 });
 
 router.get('/orange/ussd/listings', function(req, res, next) {
