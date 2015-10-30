@@ -1,5 +1,5 @@
 .ui.inverted.segment, .ui.primary.inverted.segment{
-      background: rgba(57, 136, 76, 0.78);
+      background: url(../img/farmconnecta-bg.png);
       background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -129,4 +129,25 @@ hr {
     max-width: 100%;
     border-color: #ECF5F4;
     border-width: 1px;
+}
+.farmconnecta{
+    position: relative;
+    left: 0px;
+    height: 70px;
+}
+
+.logo {
+    height: 100px;
+}
+.banner {
+    position: relative;
+    top: 212px;
+}
+
+section {
+    padding: 100px 0;
+}
+
+.text-justify {
+    text-align: justify;
 }
