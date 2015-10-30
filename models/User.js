@@ -9,7 +9,10 @@ var thinky = require('./../config/thinky.js'),
 var User = thinky.createModel("User", {
     id: type.string(),
     number: type.string(),
-    dateCreated: type.date().default(r.now())
+    brand: type.string(),
+    keyword: type.string(),
+    dateCreated: type.date().default(r.now()),
+    dateUpdated: type.date().default(r.now())
 });
 
 User.ensureIndex("number");
@@ -36,6 +39,17 @@ User.defineStatic("findById", function(id, callback) {
     }).error(function(error){
         return callback(error);
     });
+});
+
+
+User.define("findByBrand", function (brand, callback) {
+
+    User.filter({brand: brand}).run().then(function (user) {
+        callback(null, user);
+    }).error(function (error) {
+        callback(error);
+    });
+
 });
 
 module.exports = User;

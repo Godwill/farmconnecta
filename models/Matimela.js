@@ -10,6 +10,7 @@ var Matimela = thinky.createModel("Matimela", {
     description: type.string(),
     sex: type.string(),
     brand: type.string(),
+    location: type.string(),
     dateCreated: type.date().default(r.now()),
     smsSent: type.boolean().default('False')
 });

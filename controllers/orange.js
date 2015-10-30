@@ -4,7 +4,7 @@ var request = require('request'),
 
 var orange = {
 
-    chargeUser : function(data){
+    chargeUser : function(data, amount, cb){
 
         usernum = data.senderAddress.substr(7);
 
@@ -13,7 +13,7 @@ var orange = {
             "transactionOperationStatus":"Charged",
             "chargingInformation":{
                 "description":"Test chargeAmount for the challenge documentation",
-                "amount":5,
+                "amount": amount,
                 "currency":"XOF"
             },
             chargingMetaData:{
@@ -33,11 +33,13 @@ var orange = {
             },
             json : postData
         }, function (error, response, body) {
-            if(response.statusCode == 201){
-                console.log("The response: ", response)
+            cb(body);
+            if(response.statusCode === 201){
+                console.log("The response: ", response);
+                return body;
             } else {
-                console.log('error: '+ response.statusCode)
-                console.log(body)
+                console.log('error: '+ response.statusCode);
+                console.log(body);
             }
         })
     },
@@ -47,8 +49,8 @@ var orange = {
         console.log(message);
 
         var postData = {
-            "address":["tel:+99" + usernum],
-            "senderName":"FarmConnecta",
+            "address": ["tel:+99" + usernum],
+            "senderName": "FarmConnecta",
             "message": message
         };
 
@@ -62,38 +64,10 @@ var orange = {
             json : postData
         }, function (error, response, body) {
             console.log();
-            if(response.statusCode == 201){
-                console.log("The response: ", response.body)
+            if (response.statusCode === 201) {
+                console.log("The response: ", response.body);
             } else {
-                console.log('error: '+ response.statusCode);
-                console.log(body);
-            }
-        })
-    },
-
-    ussdService : function(usernum, message){
-
-        var postData = {
-            "address":["tel:+99" + usernum],
-            "senderName":"FarmConnecta",
-            "message": message
-        };
-
-        request({
-            method: 'POST',
-            uri: 'GET https://www.farmconnecta.com/orange/ussd/ HTTP/1.1 ' + usernum + '/requests',
-            headers: {
-                'Authorization': 'Bearer ' + secrets.orange.token,
-                'content-type': 'application/json'
-            },
-            json : postData
-        }, function (error, response, body) {
-            console.log();
-            if(response.statusCode == 201){
-                console.log("The response: ", response.body)
-            } else {
-                console.log('error: '+ response.statusCode);
-                console.log(body);
+                console.log('error: '+ error);
             }
         })
     }
