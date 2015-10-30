@@ -115,12 +115,15 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
 
 router.get('/orange/ussd/matimela', function(req, res, next) {
 
+    var headers = req.headers;
+
     var data = {
-        senderAddress: req.headers['user-msisdn'],
-        messageId: req.headers['activityid']
+        senderAddress: headers['user-msisdn'],
+        messageId: headers['activityid']
     };
 
     orangeAPI.chargeUser(data, 5, function(body){
+
         if(body.requestError) {
             res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
         }
@@ -128,7 +131,7 @@ router.get('/orange/ussd/matimela', function(req, res, next) {
         if(body.amountTransaction){
             if(body.amountTransaction.transactionOperationStatus === 'Charged'){
 
-                var number = body.headers['user-msisdn'].substr(7);
+                var number = body.amountTransaction.endUserId.substr(7);
                 r.table("User").get(number).run().then(function(result){
                     var user = {};
                     console.log("The user response: ", result);
