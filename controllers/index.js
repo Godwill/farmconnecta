@@ -36,7 +36,8 @@ var methods = {
             //var to_notify = [];
             users(function(users){
                 _.map(users, function(user){
-                    if(data.indexOf(user.keyword) > -1){
+                    var keyword = user.keyword;
+                    if(data.indexOf(keyword.toLowerCase()) > -1){
                         console.log( data + " contains " + user.keyword);
                         var message = "Someone has posted with a keyword you had asked to be notified about. The keyword is " + user.keyword + ". ";
                         orangeAPI.sendSMS(user.number, message);

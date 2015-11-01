@@ -341,14 +341,15 @@ router.post('/orange/smsmo', function(req, res, next) {
 
             console.log("Going in, the message does not contains ", data.message);
 
-            methods.notification(data.message);
+            var message = data.message;
+            methods.notification(message.toLowerCase());
 
             listing.save().then(function(result){
 
                 pusher.trigger('sms_channel', 'new_sms', {
                     result: result
                 });
-                console.log(result);
+
                 res.status(200)
                     .send({ success: true}
                 );
