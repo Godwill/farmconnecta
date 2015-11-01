@@ -13,8 +13,10 @@ var express = require('express'),
     Listing = require('./../models/Listing'),
     User = require('./../models/User'),
     orangeAPI = require('./../controllers/orange'),
+    methods = require('./../controllers/methods'),
     secrets = require('./../secrets/secrets'),
     Pusher = require('pusher'),
+    _ = require('underscore'),
     passwordless = require('passwordless'),
     RethinkDBStore = require('passwordless-rethinkdbstore');
 
@@ -34,7 +36,7 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'FarmConnecta' });
 });
 
-router.post('/orange/smsdr', function(req, res, next) {
+router.post('/orange/smsdr/', function(req, res, next) {
     console.log("Request: ", req.body);
     console.log("Response: ", res);
     next();
@@ -187,10 +189,128 @@ router.get('/orange/ussd/listings', function(req, res, next) {
 
 router.get('/notifications/matimela', function(req, res, next) {
 
-    r.table("User").eq_join("brand",
-        r.table("Matimela"), index="brand").run().then(function(results){
-            console.log(results);
-        });
+        _.intersectionObjects = _.intersect = function(array) {
+            var slice = Array.prototype.slice;
+            var rest = slice.call(arguments, 1);
+            return _.filter(_.uniq(array), function(item) {
+                return _.every(rest, function(other) {
+                    //return _.indexOf(other, item) >= 0;
+                    return _.any(other, function(element) { return _.isEqual(element, item); });
+                });
+            });
+        };
+
+        var matimela = function(cb){
+            r.table("Matimela").orderBy(r.desc('dateCreated')).run().then(function(results){
+                //res.json(results);
+                //console.log(obj.matimela);
+                //console.log(results);
+                return cb(results);
+            }).error(function(err){
+                console.log(err);
+                return res.json({message: err}).status(401);
+            });
+        };
+
+        var users = function(cb){
+            r.table("User").orderBy(r.desc('date')).run().then(function(results){
+                return cb(results);
+            }).error(function(err){
+                console.log(err);
+                return res.json({message: err}).status(401);
+            });
+        };
+
+        var notify = function(){
+            //var to_notify = [];
+            users(function(users){
+                matimela(function(matimela){
+                    _.map(users, function(user){
+                        if(user.brand){
+                            _.map(matimela, function(letimela){
+                                if(user.brand === letimela.Brand && letimela.notified !== true){
+                                    letimela.notified = true;
+                                    var message = "Livestock belonging to you has been reported in " + letimela.Location + ". ";
+                                    orangeAPI.sendSMS(user.number, message);
+                                    r.table("Matimela").get(letimela.id).update(letimela).run().then(function(result){
+                                    }).error(function(err){
+                                        console.log({message: err});
+                                    });
+                                    console.log("Found a match ", letimela.Brand + "!");
+                                }
+                            });
+                        }
+
+                    });
+                    var result = _.intersectionObjects(users, matimela);
+                    console.log(result);
+                });
+
+            });
+
+        };
+
+        notify();
+
+});
+
+router.get('/notifications/subscribe', function(req, res, next) {
+
+        _.intersectionObjects = _.intersect = function(array) {
+            var slice = Array.prototype.slice;
+            var rest = slice.call(arguments, 1);
+            return _.filter(_.uniq(array), function(item) {
+                return _.every(rest, function(other) {
+                    //return _.indexOf(other, item) >= 0;
+                    return _.any(other, function(element) { return _.isEqual(element, item); });
+                });
+            });
+        };
+
+        var listings = function(cb){
+            r.table("Listing").orderBy(r.desc('dateCreated')).run().then(function(results){
+                //res.json(results);
+                //console.log(obj.matimela);
+                //console.log(results);
+                return cb(results);
+            }).error(function(err){
+                console.log(err);
+                return res.json({message: err}).status(401);
+            });
+        };
+
+        var users = function(cb){
+            r.table("User").orderBy(r.desc('date')).run().then(function(results){
+                return cb(results);
+            }).error(function(err){
+                console.log(err);
+                return res.json({message: err}).status(401);
+            });
+        };
+
+        var notify = function(){
+            //var to_notify = [];
+            users(function(users){
+                listings(function(listings){
+                    _.map(users, function(user){
+                        if(user.brand){
+                            _.map(listings, function(listing){
+                                if(listing.message.indexOf(user.keyword) > -1){
+                                    console.log( listing.message + " contains " + user.keyword);
+                                    var message = "Someone has posted with a keyword you had asked to be notified about. The keyword is " + user.keyword + ". ";
+                                    orangeAPI.sendSMS(user.number, message);
+                                }
+                            });
+                        }
+
+                    });
+                });
+
+            });
+
+        };
+
+        notify();
 
 });
 
@@ -221,12 +341,13 @@ router.post('/orange/smsmo', function(req, res, next) {
 
             console.log("Going in, the message does not contains ", data.message);
 
+            methods.notification(data.message);
+
             listing.save().then(function(result){
 
                 pusher.trigger('sms_channel', 'new_sms', {
                     result: result
                 });
-
                 console.log(result);
                 res.status(200)
                     .send({ success: true}
