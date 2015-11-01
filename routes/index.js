@@ -185,6 +185,15 @@ router.get('/orange/ussd/listings', function(req, res, next) {
     });
 });
 
+router.get('/notifications/matimela', function(req, res, next) {
+
+    r.table("User").eq_join("brand",
+        r.table("Matimela"), index="brand").run().then(function(results){
+            console.log(results);
+        });
+
+});
+
 router.post('/orange/smsmo', function(req, res, next) {
 
     var data = req.body.inboundSMSMessageNotification.inboundSMSMessage;

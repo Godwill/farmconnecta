@@ -16,6 +16,7 @@ var User = thinky.createModel("User", {
 });
 
 User.ensureIndex("number");
+User.ensureIndex("brand");
 User.ensureIndex("dateCreated");
 
 User.defineStatic("pluckPassword", function() {

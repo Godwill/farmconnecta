@@ -18,6 +18,7 @@ var Matimela = thinky.createModel("Matimela", {
 
 // Attach listing to user
 Matimela.ensureIndex("dateCreated");
+Matimela.ensureIndex("brand");
 
 Matimela.define("findById", function (id, callback) {
 
