@@ -13,7 +13,7 @@ var express = require('express'),
     Listing = require('./../models/Listing'),
     User = require('./../models/User'),
     orangeAPI = require('./../controllers/orange'),
-    methods = require('./../controllers/methods'),
+    methods = require('./../controllers/index'),
     secrets = require('./../secrets/secrets'),
     Pusher = require('pusher'),
     _ = require('underscore'),
@@ -61,11 +61,11 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
         messageId: req.headers['activityid']
     };
 
-    orangeAPI.chargeUser(data, 5, function(body){
+    orangeAPI.chargeUser(data, 5, function(body) {
         console.log("The body: ", body);
 
-        if(body.requestError){
-            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+        if(body.requestError) {
+            res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-error.html'));
         }
 
         if(body.amountTransaction){
@@ -83,8 +83,8 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
                         };
 
                         r.table("User").get(number).update(user).run().then(function(result){
-                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
                             console.log(result);
+                            res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-success.html'));
                         }).error(function(err){
                             console.log({message: err});
                         });
@@ -98,7 +98,7 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
                         });
                         user.save().then(function(result){
                             console.log(result);
-                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
+                            res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-success.html'));
                         }).error(function(err){
                             console.log({message: err});
                         });
@@ -107,7 +107,7 @@ router.get('/orange/ussd/subscribe', function(req, res, next) {
                 });
 
             } else{
-                res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+                res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-error.html'));
             }
         }
 
@@ -127,7 +127,7 @@ router.get('/orange/ussd/matimela', function(req, res, next) {
     orangeAPI.chargeUser(data, 5, function(body){
 
         if(body.requestError) {
-            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+            res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-error.html'));
         }
 
         if(body.amountTransaction){
@@ -144,8 +144,8 @@ router.get('/orange/ussd/matimela', function(req, res, next) {
                         };
 
                         r.table("User").get(number).update(user).run().then(function(result){
-                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-success.html'));
                             console.log(result);
+                            res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-success.html'));
                         }).error(function(err){
                             console.log({message: err});
                         });
@@ -159,7 +159,7 @@ router.get('/orange/ussd/matimela', function(req, res, next) {
                         });
                         user.save().then(function(result){
                             console.log(result);
-                            res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+                            res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-success.html'));
                         }).error(function(err){
                             console.log({message: err});
                         });
@@ -168,7 +168,7 @@ router.get('/orange/ussd/matimela', function(req, res, next) {
                 });
 
             } else{
-                res.sendFile(path.join(__dirname, '../orange/ussd', 'subscribe-error.html'));
+                res.sendFile(path.join(__dirname, '../views/ussd', 'subscribe-error.html'));
             }
         }
 
