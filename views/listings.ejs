@@ -147,7 +147,6 @@
       <h3 class="ui header">Latest Listings</h3>
 
       <div id="listings">
-        <% if (this.listings) { %>
           <% for(var i=0; i<listings.length; i++) {%>
           <div class="ui ignored info message">
             <h3><%= listings[i].sender %>
@@ -157,7 +156,6 @@
             <p><%= listings[i].message %></p>
           </div>
           <% } %>
-        <% } %>
       </div>
 
     </div>
