@@ -1,62 +1,258 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-  <% include ../views/partials/head %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>FarmConnecta</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="fonts/stylesheet.css">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="css/animate.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/creative.css" type="text/css">
+
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" href="css/ie.css">
+    <![endif]-->
+
+    <!-- IE fix for HTML5 tags -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- jQuery and Modernizr-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/modernizr.custom.js"></script>
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
-<body>
+<body id="page-top">
 
-<% include ../views/partials/nav %>
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">FarmConnecta</a>
+            </div>
 
-<!-- Page Contents -->
-<div class="pusher">
-  <div class="ui inverted vertical masthead center aligned segment">
-
-    <div class="ui container">
-      <div class="ui large secondary inverted pointing menu">
-        <a class="toc item">
-          <i class="sidebar icon"></i>
-        </a>
-        <a class="active item">Home</a>
-        <a class="item" href="/about">About</a>
-        <a class="item" href="/listings">Listings</a>
-        <div class="right item">
-          <a class="ui inverted button" href="/login">Log in</a>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#services">Services</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#portfolio">Team</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                    <li>
+                        <a class="ui inverted button login" href="/login">Log in</a>
+                    </li>       
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-      </div>
-    </div>
-<hr>
-    <div class="ui text container">
-      <h1 class="ui inverted header">
-        FarmConnecta
-      </h1>
-      <h2>An SMS powered Platform for farmers.</h2>
-      <a class="ui huge primary button" href="/login">Get Started <i class="right arrow icon"></i></a>
-    </div>
+        <!-- /.container-fluid -->
+    </nav>
 
-  </div>
+    <header>
+        <div class="header-content">
+            <div class="ui inverted header">
+              <img src="../img/logo.png" height="160px"> <br/>
+              <img src="../img/farmconnecta.png" height="45px">
+                <h1 class="text-center">An SMS powered Livestock Markeing and Tracking System.</h1>
+                <hr>
+                <h3 class="text-center">Farmconnecta is best Livestock Marketing and Matimela tracking Platform.</h3>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Get Started<i class="right arrow icon"></i></a>
+            </div>
+        </div>
+    </header>
 
-    <div class="ui vertical centered stripe segment">
-      <div class="ui text container">
-        <h3 class="ui header">Livestock Marketing Information</h3>
-        <p>FarmConnecta provides farmers with a platform to market their livestock through SMS which eliminates need of a middle-man which cost farmers more. It also provides reliable livestock marketing information to farmers, for example livestock prices at different markets within Botswana </p>
-        <a class="ui large button " href="/about">Read More</a>
+    <section id="about">
+        <div class="container">
+            <div class="row">
 
-        <h4 class="ui horizontal header divider"></h4>
+                    <h1 class="section-heading text-center">About FarmConnecta</h1>
+                    <hr class="about"> <br/>
+                <div class="col-lg-6">
+                    <h2 class="text-justify text-muted">About Us</h2>
+                    <h3 class="text-justify text-muted">FarmConnecta is a livestock Information System that provides farmers with marketing information and Matimela (Stray Livestock) knowledge base system. The main goal of Farmconnecta is to assists farmers in rural Botswana to be able to access and maximize the benefits from using technology to make informed marketing decisions and identify appropriate markets for their livestock and also be able to search for their livestock from in Matimela knowledge base system. </h3>
+                    <a href="#about" class="btn btn-primary btn-xl page-scroll">Get Started<i class="right arrow icon"></i></a>
+                </div>
 
-        <h3 class="ui header">Matimela (Lost Animals)</h3>
-        <p>Matimela is defined as any stray livestock. Any stray animal is reported to the nearest Matimela office or Kgotla, This animals will then be collected and registered in the kraal books and marked with the council brand. Farmconnecta helps owners of this lost animals by providing them with an SMS based platform which allows them to query the matimela database and check for their missing cattle in a timely and efficient manner.</p>
-        <a class="ui large button" href="/login">Get Started</a>
-      </div>
-    </div>
+                                <div class="col-lg-4 text-center">
+                    <img src="img/header1.png" height="444px " width="572px">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="timer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1 class="section-heading">Coming Soon</h1>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+        <div id="counter"></div>
 
-  
-  <% include ../views/partials/footer %>
+        <form action="" method="get">
+            <input type="text" class="email" placeholder="Input your e-mail address here..." required />
+            <input type="submit" class="submit" value="Let me Notified" />
+        </form>
+                </div>
+            </div>
+        </div>
 
-</div>
+    </section>
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1 class="section-heading">At Your Service</h1>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-paper-plane  wow bounceIn text-primary"></i>
+                        <h3>Livestock Marketing Information</h3>
+                        <p class="text-justify text-muted">Farmconnecta provides transparent, timely and realiable livestock marketing information. It gives access to information about livestock prices at different markets, hence farmers are able to identify markets which offers best prices for their livestock.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 ">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-bell wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Livestock Marketing Notifications</h3>
+                        <p class="text-justify text-muted">Farmconnecta has a web application which posts SMSs from farmers as they market their livestock to potential markets</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-box">
+                        <p><i class="fa fa-4x fa-thumb-tack wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h2>Matimela (Stray Livestock)</h2></p>
+                        <p class="text-justify text-muted">Matimela is defined as any stray livestock. This animals are collected and registered at Matimela kraal. Farmconnecta helps owners of this livestock kept in Matimela kraals by providing them with an SMS based platform to query the matimela database for their livestock in a timely and efficient manner.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h1 class="section-heading">Let's Get In Touch!</h1>
+                    <hr class="primary">
+                    <p>Ready to market and track your livestock with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 text-center">
+                    <i class="fa fa-phone fa-3x wow bounceIn"></i>
+                    <p>+267 76456033</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
+                    <p><a href="mailto:kaboratladi@gmail.com">info@farmconnecta.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4 col-lg-offset-4">
+                        <h3>Around the Web</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="https://www.facebook.com/ecattles" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://plus.google.com/b/117657504976700746233/" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                 </div>           
+            <hr id="foot">
+            </div> 
+        </div>
+
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; eCattle 2015
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.fittext.js"></script>
+    <script src="js/wow.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/creative.js"></script>
+
+        <!-- Countdown timer and other animations -->
+    <script src="js/jquery.countdown.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
 
